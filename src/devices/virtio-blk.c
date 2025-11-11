@@ -2,7 +2,9 @@
  * rv32emu is freely redistributable under the MIT License. See the file
  * "LICENSE" for information on usage and redistribution of this file.
  */
-
+#ifndef MEM_SIZE
+#define MEM_SIZE (64 * 1024)
+#endif
 #include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
