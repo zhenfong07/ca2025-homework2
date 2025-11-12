@@ -25,7 +25,7 @@ OBJDUMP = $(CROSS_COMPILE)objdump
 
 # Các tệp đối tượng (object files) cần build
 # Đã xóa 'hanoi.o'. Chỉ build các tệp cho Problem C.
-OBJS =  start.o main.o perfcounter.o ticks.o
+OBJS =  start.o main_optimized.o  perfcounter.o ticks.o
 
 # Mức tối ưu hóa (O2, Os, O3, Ofast)
 OPT_LEVEL = -Ofast
