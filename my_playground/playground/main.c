@@ -38,33 +38,27 @@ static inline uint32_t div10_u32(uint32_t n) {
 
 void print_dec_and_newline(unsigned long val) {
     char buf[24];
-    char *p = buf + sizeof(buf) - 2;  // p = buf + 22
-    *p = '\n';                        // buf[22] = '\n'
-    p++;                              // p = buf + 23
-    *p = '\0';                        // buf[23] = '\0'
-    p--;                              // p = buf + 22 (p trỏ vào '\n')
+    char *p = buf + sizeof(buf) - 2;  
+    *p = '\n';  
+    p++;
+    *p = '\0';
+    p--;
 
     if (val == 0) {  
-        p--;         // <<< SỬA: Di chuyển p (p = buf + 21)
-        *p = '0';    // <<< SỬA: Ghi '0' vào buf[21]
+        *p = '0'; p--;  
     } else {
         uint32_t v = (uint32_t)val;
         while (v) {
             uint32_t q = div10_u32(v);
-            uint32_t r = v - q * 10;
-            
-            p--;         // <<< SỬA: Di chuyển p TRƯỚC (p = buf + 21, 20, 19...)
-            *p = '0' + r;  // <<< SỬA: Ghi chữ số vào
-            v = q;
+            uint32_t r = v - q * 10;  
+            *p = '0' + r;
+            p--; v = q;
         }
     }
-    
-    // p++ ở đây là ĐÚNG, để bù lại cho p-- cuối cùng trong vòng lặp
-    p++; 
-    
-    // Tính toán độ dài và in
+    p++;
     printstr(p, (buf + sizeof(buf) - 1) - p);
 }
+
 /* ================================================
  * Khai báo từ perfcounter.S
  * ================================================ */
@@ -179,11 +173,11 @@ int main(void) {
     else { TEST_LOGGER("FAILED\n"); }
 
     TEST_LOGGER("\n--- Performance Statistics (rsqrt) ---\n");
-    TEST_LOGGER("Cycles: ");
+    TEST_LOGGER("\nCycles:  ");
     print_dec_and_newline(cycles_c);
-    TEST_LOGGER("Instructions: ");
+    TEST_LOGGER("\nInstructions: ");
     print_dec_and_newline(instret_c);
-    TEST_LOGGER("Ticks: ");
+    TEST_LOGGER("\nTicks: ");
     print_dec_and_newline(ticks_c);
 
 
@@ -211,9 +205,9 @@ int main(void) {
     TEST_LOGGER("\n--- Performance Statistics (Hanoi) ---\n");
     TEST_LOGGER("Cycles: ");
     print_dec_and_newline(cycles_c);
-    TEST_LOGGER("Instructions: ");
+    TEST_LOGGER("\nInstructions: ");
     print_dec_and_newline(instret_c);
-    TEST_LOGGER("Ticks: ");
+    TEST_LOGGER("\nTicks: ");
     print_dec_and_newline(ticks_c);
 
     // --------------------------------------------------
